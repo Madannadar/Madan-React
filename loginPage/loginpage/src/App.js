@@ -1,6 +1,6 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { LoginSignUp } from './components/Assets/LoginSignUp/LoginSignUp';
+import { LoginSignUp } from './components/LoginSignUp/LoginSignUp';
 
 function App() {
   return (
