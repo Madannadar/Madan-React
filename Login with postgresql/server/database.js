@@ -6,7 +6,7 @@ const pool = new Pool({
     password: "123",
     host: "localhost",
     port : 5432,
-    database: "login_system",
+    database: "madan21",
 });
 
 const createTblQry =  `CREATE TABLE accounts (
@@ -15,7 +15,7 @@ const createTblQry =  `CREATE TABLE accounts (
     password VARCHAR ( 50 ) UNIQUE NOT NULL);`
 
 pool.query(createTblQry).then((Response) => {
-    console.log("Table Created");
+    console.log("table Created");
     console.log(response);
 })
 .catch((err) => {
