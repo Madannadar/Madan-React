@@ -18,7 +18,24 @@ app.post("/adduser", (req, res) => { // pahel it was get then post
     // console.log("username:" + username);
     // console.log("password:", + password);
 
-    const insert = `INSERT INTO schemes   ( SchemeName,  , EndDate, TotalAmount, IsRefundable, RefundAmount) VALUES ( '${SchemeName}', '${StartDate}', '${EndDate}', '${TotalAmount}', '${IsRefundable}', '${RefundAmount}');`
+    const insert = `
+    INSERT INTO schemes (
+      SchemeName, 
+      StartDate, 
+      EndDate, 
+      TotalAmount, 
+      IsRefundable, 
+      RefundAmount
+    ) 
+    VALUES (
+      '${SchemeName}', 
+      '${StartDate}', 
+      '${EndDate}', 
+      '${TotalAmount}', 
+      '${IsRefundable}', 
+      '${RefundAmount}'
+    );
+  `;
     
     pool.query(insert).then((response) => {
         console.log("Data saved");
@@ -33,7 +50,7 @@ app.post("/adduser", (req, res) => { // pahel it was get then post
     res.send("Response Received1: "+ req.body);
 });
 
-app.listen(3000, () => console.log("server on localhost 3000"))
+app.listen(4000, () => console.log("server on localhost 4000"))
 
 
 

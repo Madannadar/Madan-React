@@ -33,7 +33,7 @@ app.post("/adduser", (req, res) => { // pahel it was get then post
     res.send("Response Received1: "+ req.body);
 });
 
-app.listen(3000, () => console.log("server on localhost 3000"))
+app.listen(4000, () => console.log("server on localhost 3000"))
 
 
 
