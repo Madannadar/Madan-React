@@ -12,7 +12,7 @@ const pool = new Pool({
 // all this commented code is to send query from this code to database 
 
 
- const createTblQry1 =  `CREATE TABLE schemes (
+const createTblQry =  `CREATE TABLE schemes (
   SchemeID SERIAL PRIMARY KEY,
   SchemeName VARCHAR(255),
   StartDate DATE,
@@ -23,8 +23,7 @@ const pool = new Pool({
   RefundAmount DECIMAL(10, 2)
 );`
 
-
-pool.query(createTblQry1).then((Response) => {
+pool.query(createTblQry).then((Response) => {
     console.log("Table Created");
     console.log(response);
 })
