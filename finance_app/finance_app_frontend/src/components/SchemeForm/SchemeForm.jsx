@@ -1,3 +1,5 @@
+// http://localhost:5000/api/schemes
+
 import React, { useState } from "react";
 import "./SchemeForm.css"; // Assuming you have a CSS file for styles
 
@@ -21,39 +23,42 @@ const SchemeForm = () => {
     });
   };
 
-  // Handle form submission to send data to the backend
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/schemes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(schemeData), // Send form data
-      });
+  // Frontend (React)
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/schemes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(schemeData), // Send form data
+    });
 
-      if (!response.ok) {
-        throw new Error("Error adding scheme");
-      }
-
-      const result = await response.json();
-      console.log("Scheme added:", result);
-
-      // Clear the form after submission
-      setSchemeData({
-        SchemeName: "",
-        StartDate: "",
-        EndDate: "",
-        TotalAmount: "",
-        PaymentFrequency: "",
-        IsRefundable: false,
-        RefundAmount: "",
-      });
-    } catch (error) {
-      console.error("Error adding scheme:", error);
+    if (!response.ok) {
+      const errorData = await response.json();  // Get detailed error from backend
+      console.error("Error details:", errorData.details);  // Log backend error details
+      throw new Error("Error adding scheme");
     }
-  };
+
+    const result = await response.json();
+    console.log("Scheme added:", result);
+
+    // Clear the form after submission
+    setSchemeData({
+      SchemeName: "",
+      StartDate: "",
+      EndDate: "",
+      TotalAmount: "",
+      PaymentFrequency: "",
+      IsRefundable: false,
+      RefundAmount: "",
+    });
+  } catch (error) {
+    console.error("Error adding scheme:", error);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit}>
