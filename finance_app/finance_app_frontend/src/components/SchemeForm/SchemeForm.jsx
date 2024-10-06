@@ -11,7 +11,7 @@ const SchemeForm = () => {
     TotalAmount: "",
     PaymentFrequency: "",
     IsRefundable: false,
-    RefundAmount: "",
+    RefundAmount: 0,
   });
 
   // Handle input changes and update the state

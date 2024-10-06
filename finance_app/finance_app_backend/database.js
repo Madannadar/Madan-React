@@ -12,15 +12,16 @@ const pool = new Pool({
 // all this commented code is to send query from this code to database 
 
 
-const createTblQry =  `CREATE TABLE schemes (
-  SchemeID SERIAL PRIMARY KEY,
-  SchemeName VARCHAR(255),
-  StartDate DATE,
-  EndDate DATE,
-  TotalAmount DECIMAL(10, 2),
+const createTblQry =  `CREATE TABLE funds (
+  FundID SERIAL PRIMARY KEY,
+  FundName VARCHAR(255) NOT NULL,
+  TotalAmount DECIMAL(10, 2) NOT NULL,
+  FundManager VARCHAR(255),
+  StartDate DATE NOT NULL,
+  EndDate DATE NOT NULL,
   PaymentFrequency VARCHAR(50),
-  IsRefundable BOOLEAN,
-  RefundAmount DECIMAL(10, 2)
+  IsRefundable BOOLEAN DEFAULT FALSE,
+  RefundAmount DECIMAL(10, 2) DEFAULT 0
 );`
 
 pool.query(createTblQry).then((Response) => {

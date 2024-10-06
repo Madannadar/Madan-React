@@ -24,21 +24,39 @@ const FundsForm = () => {
 
   // Handle form submission to send data to the backend
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/funds", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(fundData), // Send form data
-      });
-      const result = await response.json();
-      console.log("Fund added:", result);
-    } catch (error) {
-      console.error("Error adding fund:", error);
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/funds", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fundData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add fund");
     }
-  };
+
+    const result = await response.json();
+    console.log("Fund added:", result);
+
+    // Clear form after successful submission
+    setFundData({
+      FundName: "",
+      TotalAmount: "",
+      FundManager: "",
+      StartDate: "",
+      EndDate: "",
+      PaymentFrequency: "",
+      IsRefundable: false,
+      RefundAmount: "",
+    });
+  } catch (error) {
+    console.error("Error adding fund:", error);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit}>
