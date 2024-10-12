@@ -1,93 +1,75 @@
-import React, { useState } from "react";
-import "./FundsForm.css"; // Assuming you have the same styles
+// http://localhost:5000/api/schemes
 
-const FundsForm = () => {
-  const [fundData, setFundData] = useState({
-    FundName: "",
-    TotalAmount: "",
-    FundManager: "",
+import React, { useState } from "react";
+import "./AddScheme.css"; // Assuming you have a CSS file for styles
+
+const SchemeForm = () => {
+  const [schemeData, setSchemeData] = useState({
+    SchemeName: "",
     StartDate: "",
     EndDate: "",
+    TotalAmount: "",
     PaymentFrequency: "",
     IsRefundable: false,
-    RefundAmount: "",
+    RefundAmount: 0,
   });
 
   // Handle input changes and update the state
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFundData({
-      ...fundData,
+    setSchemeData({
+      ...schemeData,
       [name]: type === "checkbox" ? checked : value,
     });
   };
 
-  // Handle form submission to send data to the backend
-  const handleSubmit = async (e) => {
+  // Frontend (React)
+const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const response = await fetch("http://localhost:5000/api/funds", {
+    const response = await fetch("http://localhost:5000/api/schemes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(fundData),
+      body: JSON.stringify(schemeData), // Send form data
     });
 
     if (!response.ok) {
-      throw new Error("Failed to add fund");
+      const errorData = await response.json();  // Get detailed error from backend
+      console.error("Error details:", errorData.details);  // Log backend error details
+      throw new Error("Error adding scheme");
     }
 
     const result = await response.json();
-    console.log("Fund added:", result);
+    console.log("Scheme added:", result);
 
-    // Clear form after successful submission
-    setFundData({
-      FundName: "",
-      TotalAmount: "",
-      FundManager: "",
+    // Clear the form after submission
+    setSchemeData({
+      SchemeName: "",
       StartDate: "",
       EndDate: "",
+      TotalAmount: "",
       PaymentFrequency: "",
       IsRefundable: false,
       RefundAmount: "",
     });
   } catch (error) {
-    console.error("Error adding fund:", error);
+    console.error("Error adding scheme:", error);
   }
 };
 
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add Fund</h2>
+      <h2>Add Scheme</h2>
 
-      <label htmlFor="FundName">Fund Name:</label>
+      <label htmlFor="SchemeName">Scheme Name:</label>
       <input
         type="text"
-        id="FundName"
-        name="FundName"
-        value={fundData.FundName}
-        onChange={handleChange}
-        required
-      />
-
-      <label htmlFor="TotalAmount">Total Amount:</label>
-      <input
-        type="number"
-        id="TotalAmount"
-        name="TotalAmount"
-        value={fundData.TotalAmount}
-        onChange={handleChange}
-        required
-      />
-
-      <label htmlFor="FundManager">Fund Manager:</label>
-      <input
-        type="text"
-        id="FundManager"
-        name="FundManager"
-        value={fundData.FundManager}
+        id="SchemeName"
+        name="SchemeName"
+        value={schemeData.SchemeName}
         onChange={handleChange}
         required
       />
@@ -97,7 +79,7 @@ const FundsForm = () => {
         type="date"
         id="StartDate"
         name="StartDate"
-        value={fundData.StartDate}
+        value={schemeData.StartDate}
         onChange={handleChange}
         required
       />
@@ -107,7 +89,18 @@ const FundsForm = () => {
         type="date"
         id="EndDate"
         name="EndDate"
-        value={fundData.EndDate}
+        value={schemeData.EndDate}
+        onChange={handleChange}
+        required
+      />
+
+      <label htmlFor="TotalAmount">Total Amount:</label>
+      <input
+        type="number"
+        id="TotalAmount"
+        name="TotalAmount"
+        placeholder="only 5 0's allow"
+        value={schemeData.TotalAmount}
         onChange={handleChange}
         required
       />
@@ -117,7 +110,7 @@ const FundsForm = () => {
         type="text"
         id="PaymentFrequency"
         name="PaymentFrequency"
-        value={fundData.PaymentFrequency}
+        value={schemeData.PaymentFrequency}
         onChange={handleChange}
         required
       />
@@ -127,10 +120,10 @@ const FundsForm = () => {
         type="number"
         id="RefundAmount"
         name="RefundAmount"
-        value={fundData.RefundAmount}
+        value={schemeData.RefundAmount}
         onChange={handleChange}
-        disabled={!fundData.IsRefundable}
-        required={fundData.IsRefundable}
+        disabled={!schemeData.IsRefundable}
+        required={schemeData.IsRefundable}
       />
 
       <label htmlFor="IsRefundable">Is Refundable:</label>
@@ -138,7 +131,7 @@ const FundsForm = () => {
         type="checkbox"
         id="IsRefundable"
         name="IsRefundable"
-        checked={fundData.IsRefundable}
+        checked={schemeData.IsRefundable}
         onChange={handleChange}
       />
 
@@ -147,4 +140,8 @@ const FundsForm = () => {
   );
 };
 
-export default FundsForm;
+export default SchemeForm;
+
+
+
+

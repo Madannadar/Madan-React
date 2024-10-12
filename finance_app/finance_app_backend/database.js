@@ -12,24 +12,24 @@ const pool = new Pool({
 // all this commented code is to send query from this code to database 
 
 
-const createTblQry =  `CREATE TABLE funds (
-  FundID SERIAL PRIMARY KEY,
-  FundName VARCHAR(255) NOT NULL,
-  TotalAmount DECIMAL(10, 2) NOT NULL,
-  FundManager VARCHAR(255),
-  StartDate DATE NOT NULL,
-  EndDate DATE NOT NULL,
-  PaymentFrequency VARCHAR(50),
-  IsRefundable BOOLEAN DEFAULT FALSE,
-  RefundAmount DECIMAL(10, 2) DEFAULT 0
-);`
+// const createTblQry =  `CREATE TABLE funds (
+//   FundID SERIAL PRIMARY KEY,
+//   FundName VARCHAR(255) NOT NULL,
+//   TotalAmount DECIMAL(10, 2) NOT NULL,
+//   FundManager VARCHAR(255),
+//   StartDate DATE NOT NULL,
+//   EndDate DATE NOT NULL,
+//   PaymentFrequency VARCHAR(50),
+//   IsRefundable BOOLEAN DEFAULT FALSE,
+//   RefundAmount DECIMAL(10, 2) DEFAULT 0
+// );`
 
-pool.query(createTblQry).then((Response) => {
-    console.log("Table Created");
-    console.log(response);
-})
-.catch((err) => {
-    console.log(err);
-})
+// pool.query(createTblQry).then((Response) => {
+//     console.log("Table Created");
+//     console.log(response);
+// })
+// .catch((err) => {
+//     console.log(err);
+// })
 
 module.exports = pool;

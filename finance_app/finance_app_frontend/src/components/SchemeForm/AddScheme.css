@@ -1,0 +1,99 @@
+/* General styles for the form container */
+.scheme-form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Form headings */
+.scheme-form-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Label styling */
+.scheme-form-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input and select styling */
+.scheme-form-container input[type="text"],
+.scheme-form-container input[type="number"],
+.scheme-form-container input[type="date"],
+.scheme-form-container input[type="checkbox"],
+.scheme-form-container button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Checkbox special case */
+.scheme-form-container input[type="checkbox"] {
+  width: auto;
+  margin-left: 10px;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Submit button styling */
+.scheme-form-container button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.scheme-form-container button:hover {
+  background-color: #45a049;
+}
+
+/* Success or error messages after form submission */
+.submit-status {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.submit-status.success {
+  color: green;
+}
+
+.submit-status.error {
+  color: red;
+}
+
+/* Make form responsive */
+@media (max-width: 768px) {
+  .scheme-form-container {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .scheme-form-container h2 {
+    font-size: 24px;
+  }
+
+  .scheme-form-container button {
+    font-size: 14px;
+  }
+}
