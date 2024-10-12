@@ -1,48 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import './Showfunds.css'; // Optional CSS for styling
+import React, { useEffect, useState } from "react";
+import "./ViewFunds.css"; // CSS for styling
 
-const Showfunds = () => {
-  const [funds, setfunds] = useState([]);
+const ViewFunds = () => {
+  const [funds, setFunds] = useState([]);
 
   useEffect(() => {
-    const fetchfunds = async () => {
+    const fetchFunds = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/funds");
-        if (!response.ok) {
-          throw new Error("Failed to fetch funds");
-        }
         const data = await response.json();
-        setfunds(data); // Assuming data is an array of funds
+        setFunds(data);
       } catch (error) {
         console.error("Error fetching funds:", error);
       }
     };
 
-    fetchfunds();
+    fetchFunds();
   }, []);
 
+  const formatPaymentFrequency = (frequency) => {
+    // Assuming the backend sends '1' for monthly and '2' for yearly
+    if (frequency === '1') {
+      return "Monthly";
+    } else if (frequency === '2') {
+      return "Yearly";
+    } else {
+      return "Unknown";
+    }
+  };
+
   return (
-    <div className="show-funds">
-      <h2>Available funds</h2>
-      {funds.length > 0 ? (
-        <ul>
-          {funds.map((fund) => (
-            <li key={fund.id}> {/* Assuming fund has a unique id */}
-              <strong>Fund Name:</strong> {fund.FundName} <br />
-              <strong>Total Amount:</strong> {fund.TotalAmount} <br />
-              <strong>Start Date:</strong> {new Date(fund.StartDate).toLocaleDateString()} <br />
-              <strong>End Date:</strong> {new Date(fund.EndDate).toLocaleDateString()} <br />
-              <strong>Payment Frequency:</strong> {fund.PaymentFrequency} <br />
-              <strong>Is Refundable:</strong> {fund.IsRefundable ? 'Yes' : 'No'} <br />
-              <strong>Refund Amount:</strong> {fund.RefundAmount}
-            </li>
+    <div className="table-container">
+      <h2>Available Funds</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Fund Name</th>
+            <th>Total Amount</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Payment Frequency</th>
+            <th>Refundable</th>
+            <th>Refund Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {funds.map((fund, index) => (
+            <tr key={index}>
+              <td>{fund.fundname}</td>
+              <td>{fund.totalamount}</td>
+              {/* Formatting the start and end dates */}
+              <td>{fund.startdate ? new Date(fund.startdate).toLocaleDateString() : 'N/A'}</td>
+              <td>{fund.enddate ? new Date(fund.enddate).toLocaleDateString() : 'N/A'}</td>
+              <td>{formatPaymentFrequency(fund.paymentfrequency)}</td>
+              <td>{fund.isrefundable ? "Yes" : "No"}</td>
+              <td>{fund.refundamount}</td>
+            </tr>
           ))}
-        </ul>
-      ) : (
-        <p>No funds available.</p>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Showfunds;
+export default ViewFunds;

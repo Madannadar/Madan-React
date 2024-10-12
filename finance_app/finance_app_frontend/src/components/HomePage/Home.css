@@ -1,33 +1,131 @@
 /* Home.css */
 
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
+}
+
 .home {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+}
+
+.home-header {
+  background-color: #4CAF50;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  letter-spacing: 1px;
+}
+
+.home-header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.home-header nav ul li {
+  display: inline-block;
+}
+
+.home-header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2em;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.home-header nav ul li a:hover {
+  background-color: #45a049;
+}
+
+main {
+  margin: 20px auto;
+  padding: 0 20px;
+  max-width: 800px;
+}
+
+main h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+main p {
+  font-size: 1.2em;
+  color: #555;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Schemes List Styling */
+.schemes-list {
+  margin-top: 20px;
+}
+
+.schemes-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.schemes-list th, .schemes-list td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.schemes-list th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.schemes-list td {
+  text-align: left;
+}
+
+.schemes-list tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.schemes-list tr:hover {
+  background-color: #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-header nav ul {
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .home-header {
-    background-color: #282c34;
-    color: white;
-    padding: 20px;
+
+  main h2 {
+    font-size: 1.8em;
   }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
+
+  main p {
+    font-size: 1.1em;
   }
-  
-  nav ul li {
-    display: inline;
-    margin: 0 15px;
-  }
-  
-  nav ul li a {
-    color: #61dafb;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
-  
+}
