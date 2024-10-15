@@ -6,10 +6,9 @@ import ViewFunds from "./components/FundsForm/ViewFunds";
 import SchemePage from "./components/SchemeForm/SchemePage";
 import FundsForm from "./components/FundsForm/AddFunds";
 import Home from "./components/HomePage/Home"; // Import Home component
-import Payment from "./components/HomePage/Payment"; // Import Payment component
-import CustomerDetails from "./components/HomePage/CustomerDetails"; // Import Customer Details component
 import "./App.css";
-
+import CustomerForm from "./components/Customer/CustomerForm";
+import ViewCustomers from "./components/Customer/ViewCustomers";
 function App() {
   return (
     <Router>
@@ -23,8 +22,8 @@ function App() {
           <Route path="/view-funds" element={<ViewFunds />} /> {/* Add route for ViewFunds */}
         {/* Other routes */}
           <Route path="/fund" element={<FundsForm />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/customer-details" element={<CustomerDetails />} />
+          <Route path="/customer-form" element={<CustomerForm />} />
+          <Route path="/view-customers" element={<ViewCustomers />} />
         </Routes>
       </div>
     </Router>

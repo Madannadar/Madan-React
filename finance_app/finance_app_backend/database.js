@@ -22,7 +22,21 @@ const pool = new Pool({
 //   PaymentFrequency VARCHAR(50),
 //   IsRefundable BOOLEAN DEFAULT FALSE,
 //   RefundAmount DECIMAL(10, 2) DEFAULT 0
+// // );`
+
+// const createTblQry = `CREATE TABLE CustomerDetails (
+//     customer_id SERIAL PRIMARY KEY,
+//     customer_name VARCHAR(100) NOT NULL,
+//     address TEXT NOT NULL,
+//     bank_name VARCHAR(100) NOT NULL,
+//     account_number VARCHAR(20) NOT NULL,
+//     ifsc_code VARCHAR(11) NOT NULL,
+//     branch VARCHAR(100) NOT NULL,
+//     aadhar_number VARCHAR(12) NOT NULL,
+//     mobile_number VARCHAR(10) NOT NULL,
+//     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 // );`
+
 
 // pool.query(createTblQry).then((Response) => {
 //     console.log("Table Created");

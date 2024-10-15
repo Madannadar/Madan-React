@@ -43,7 +43,6 @@ app.post("/api/schemes", (req, res) => {
     RefundAmount
   ];
 
-  // Execute the query using parameterized inputs to avoid SQL injection
   pool.query(insertQuery, values)
     .then((response) => {
       console.log("Data saved:", response.rows[0]);
@@ -55,7 +54,7 @@ app.post("/api/schemes", (req, res) => {
     });
 });
 
-// POST route for adding scheme
+// POST route for adding funds
 app.post("/api/funds", (req, res) => {
   const { 
     FundName, 
@@ -68,14 +67,14 @@ app.post("/api/funds", (req, res) => {
   } = req.body;
 
   const insertQuery = `
-  INSERT INTO funds (
-    FundName, 
-    TotalAmount, 
-    StartDate, 
-    EndDate,
-    PaymentFrequency, 
-    IsRefundable, 
-    RefundAmount
+    INSERT INTO funds (
+      FundName, 
+      TotalAmount, 
+      StartDate, 
+      EndDate,
+      PaymentFrequency, 
+      IsRefundable, 
+      RefundAmount
     ) 
     VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
   `;
@@ -90,7 +89,6 @@ app.post("/api/funds", (req, res) => {
     RefundAmount
   ];
 
-  // Execute the query using parameterized inputs to avoid SQL injection
   pool.query(insertQuery, values)
     .then((response) => {
       console.log("Data saved:", response.rows[0]);
@@ -98,16 +96,66 @@ app.post("/api/funds", (req, res) => {
     })
     .catch((err) => {
       console.error("Error inserting data:", err);
-      res.status(500).json({ error: "Error saving scheme", details: err.message  });
+      res.status(500).json({ error: "Error saving funds", details: err.message  });
     });
 });
 
+// POST route for adding customer details
+app.post("/api/customers", (req, res) => {
+  const { 
+    customer_name, 
+    address, 
+    bank_name, 
+    account_number, 
+    ifsc_code, 
+    branch, 
+    aadhar_number, 
+    mobile_number 
+  } = req.body;
+
+  const insertQuery = `
+    INSERT INTO customers (
+      customer_name, 
+      address, 
+      bank_name, 
+      account_number, 
+      ifsc_code, 
+      branch, 
+      aadhar_number, 
+      mobile_number
+    ) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;
+  `;
+
+  const values = [
+    customer_name, 
+    address, 
+    bank_name, 
+    account_number, 
+    ifsc_code, 
+    branch, 
+    aadhar_number, 
+    mobile_number
+  ];
+
+  pool.query(insertQuery, values)
+    .then((response) => {
+      console.log("Customer data saved:", response.rows[0]);
+      res.json({ message: "Customer added successfully", data: response.rows[0] });
+    })
+    .catch((err) => {
+      console.error("Error inserting customer data:", err);
+      res.status(500).json({ error: "Error saving customer", details: err.message });
+    });
+});
+
+// GET routes
 app.get('/api/funds', (req, res) => {
-  const selectQuery = 'SELECT * FROM funds'; // Adjust based on your actual table structure
+  const selectQuery = 'SELECT * FROM funds';
 
   pool.query(selectQuery)
     .then((result) => {
-      res.json(result.rows); // Send the rows (funds data) to the client
+      res.json(result.rows);
     })
     .catch((error) => {
       console.error('Error fetching funds:', error);
@@ -116,11 +164,11 @@ app.get('/api/funds', (req, res) => {
 });
 
 app.get('/api/schemes', (req, res) => {
-  const selectQuery = 'SELECT * FROM schemes'; // Adjust based on your actual table structure
+  const selectQuery = 'SELECT * FROM schemes';
 
   pool.query(selectQuery)
     .then((result) => {
-      res.json(result.rows); // Send the rows (schemes data) to the client
+      res.json(result.rows);
     })
     .catch((error) => {
       console.error('Error fetching schemes:', error);
@@ -128,8 +176,19 @@ app.get('/api/schemes', (req, res) => {
     });
 });
 
+// GET route for fetching customer details
+app.get('/api/customers', (req, res) => {
+  const selectQuery = 'SELECT * FROM customers';
 
-
+  pool.query(selectQuery)
+    .then((result) => {
+      res.json(result.rows);
+    })
+    .catch((error) => {
+      console.error('Error fetching customers:', error);
+      res.status(500).send('Error fetching customers');
+    });
+});
 
 // Start the server
 app.listen(5000, () => console.log("Server running on port 5000"));
