@@ -15,6 +15,13 @@ const FundsForm = () => {
   // Handle input changes and update the state
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    
+    if (name === "TotalAmount") {
+      if (value.length > 12) {
+        alert("Total amount cannot exceed 12 digits.");
+        return; // Prevent further input
+      }
+    }
     setFundData({
       ...fundData,
       [name]: type === "checkbox" ? checked : value,
@@ -76,7 +83,7 @@ const FundsForm = () => {
         type="number"
         id="TotalAmount"
         name="TotalAmount"
-        placeholder="12 digits, 2 decimals"
+        placeholder="12 digits, 12 decimals"
         value={fundData.TotalAmount}
         onChange={handleChange}
         required

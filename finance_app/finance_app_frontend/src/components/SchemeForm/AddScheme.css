@@ -1,99 +1,91 @@
-/* General styles for the form container */
-.scheme-form-container {
+/* SchemeForm.css */
+
+.scheme-form {
   max-width: 600px;
-  margin: 40px auto;
+  margin: auto;
   padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
 }
 
-/* Form headings */
-.scheme-form-container h2 {
+.scheme-form h2 {
   text-align: center;
   color: #333;
   margin-bottom: 20px;
 }
 
-/* Label styling */
-.scheme-form-container label {
+.scheme-form label {
   display: block;
-  margin-bottom: 8px;
+  margin: 10px 0 5px;
   font-weight: bold;
-  color: #333;
 }
 
-/* Input and select styling */
-.scheme-form-container input[type="text"],
-.scheme-form-container input[type="number"],
-.scheme-form-container input[type="date"],
-.scheme-form-container input[type="checkbox"],
-.scheme-form-container button {
+.scheme-form input[type="text"],
+.scheme-form input[type="number"],
+.scheme-form input[type="date"],
+.scheme-form input[type="checkbox"] {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  box-sizing: border-box;
 }
 
-/* Checkbox special case */
-.scheme-form-container input[type="checkbox"] {
+.scheme-form input[type="checkbox"] {
   width: auto;
-  margin-left: 10px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
-/* Error message styling */
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-bottom: 20px;
+.scheme-form input[type="checkbox"] + label {
+  display: inline;
+  font-weight: normal;
 }
 
-/* Submit button styling */
-.scheme-form-container button {
-  background-color: #4caf50;
+.scheme-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
 }
 
-.scheme-form-container button:hover {
-  background-color: #45a049;
+.scheme-form button:hover {
+  background-color: #0056b3;
 }
 
-/* Success or error messages after form submission */
-.submit-status {
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.submit-status.success {
-  color: green;
-}
-
-.submit-status.error {
+/* Error message styling */
+.scheme-form .error-message {
   color: red;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
-/* Make form responsive */
-@media (max-width: 768px) {
-  .scheme-form-container {
-    width: 90%;
+/* Disabled input styling */
+.scheme-form input[disabled] {
+  background-color: #e9e9e9;
+  cursor: not-allowed;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 600px) {
+  .scheme-form {
     padding: 15px;
   }
 
-  .scheme-form-container h2 {
-    font-size: 24px;
+  .scheme-form input[type="text"],
+  .scheme-form input[type="number"],
+  .scheme-form input[type="date"] {
+    font-size: 14px;
   }
 
-  .scheme-form-container button {
+  .scheme-form button {
     font-size: 14px;
   }
 }
