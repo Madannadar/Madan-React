@@ -37,23 +37,23 @@ const pool = new Pool({
 //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 // );`
 
-const createMembersTableQry = `CREATE TABLE Members (
-    member_id SERIAL PRIMARY KEY,
-    scheme_id INT REFERENCES schemes(scheme_id),
-    customer_id INT REFERENCES CustomerDetails(customer_id),
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    total_investment DECIMAL(10, 2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);`;
+// const createMembersTableQry = `CREATE TABLE Members (
+//     member_id SERIAL PRIMARY KEY,
+//     scheme_id INT REFERENCES schemes(scheme_id),
+//     customer_id INT REFERENCES CustomerDetails(customer_id),
+//     start_date DATE NOT NULL,
+//     end_date DATE NOT NULL,
+//     total_investment DECIMAL(10, 2) NOT NULL,
+//     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+// );`;
 
 
-pool.query(createMembersTableQry).then((Response) => {
-    console.log("Table Created");
-    console.log(response);
-})
-.catch((err) => {
-    console.log(err);
-})
+// pool.query(createMembersTableQry).then((Response) => {
+//     console.log("Table Created");
+//     console.log(response);
+// })
+// .catch((err) => {
+//     console.log(err);
+// })
 
 module.exports = pool;
