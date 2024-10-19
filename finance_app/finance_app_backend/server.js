@@ -190,5 +190,34 @@ app.get('/api/customers', (req, res) => {
     });
 });
 
+
+// In your Express server (server.js or app.js)
+app.post("/api/schemes/add-member", (req, res) => {
+  const { schemeId, customerId, startDate, endDate, totalAmount } = req.body;
+
+  const insertQuery = `
+    INSERT INTO scheme_members (
+      scheme_id, 
+      customer_id, 
+      start_date, 
+      end_date, 
+      total_amount
+    ) 
+    VALUES ($1, $2, $3, $4, $5) RETURNING *;
+  `;
+
+  const values = [schemeId, customerId, startDate, endDate, totalAmount];
+
+  pool.query(insertQuery, values)
+    .then((response) => {
+      res.json({ message: "Member added successfully", data: response.rows[0] });
+    })
+    .catch((err) => {
+      console.error("Error inserting member:", err);
+      res.status(500).json({ error: "Error adding member", details: err.message });
+    });
+});
+
+
 // Start the server
 app.listen(5000, () => console.log("Server running on port 5000"));

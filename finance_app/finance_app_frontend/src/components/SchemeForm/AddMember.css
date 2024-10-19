@@ -1,0 +1,41 @@
+/* src/components/MemberForm/AddMember.css */
+
+.add-member-form {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  .add-member-form table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .add-member-form th,
+  .add-member-form td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .add-member-form th {
+    background-color: #f4f4f4;
+  }
+  
+  .add-member-form input[type="checkbox"] {
+    cursor: pointer;
+  }
+  
+  .add-member-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-member-form button:hover {
+    background-color: #0056b3;
+  }
+  

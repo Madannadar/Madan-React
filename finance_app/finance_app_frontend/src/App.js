@@ -9,6 +9,8 @@ import Home from "./components/HomePage/Home"; // Import Home component
 import "./App.css";
 import CustomerForm from "./components/Customer/CustomerForm";
 import ViewCustomers from "./components/Customer/ViewCustomers";
+import AddMember from "./components/SchemeForm/AddMember";
+import AddMemberForm from "./components/SchemeForm/AddMemberForm";
 function App() {
   return (
     <Router>
@@ -24,6 +26,9 @@ function App() {
           <Route path="/fund" element={<FundsForm />} />
           <Route path="/customer-form" element={<CustomerForm />} />
           <Route path="/view-customers" element={<ViewCustomers />} />
+          <Route path="/scheme/:schemeId/add-member" element={<AddMember />} /> {/* Add route for AddMember */}
+          <Route path="/scheme/:schemeId/add-member" element={<AddMemberForm />} />
+          
         </Routes>
       </div>
     </Router>

@@ -1,21 +1,18 @@
-// src/components/CustomerForm/ViewCustomers.jsx
+// src/components/ViewCustomers.jsx
 
 import React, { useEffect, useState } from "react";
 
 const ViewCustomers = () => {
   const [customers, setCustomers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch customers from the backend
+  
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/customers");
-        if (response.ok) {
-          const data = await response.json();
-          setCustomers(data); // Set the customers data
-        } else {
-          console.error("Failed to fetch customers");
-        }
+        const data = await response.json();
+        setCustomers(data);
       } catch (error) {
         console.error("Error fetching customers:", error);
       }
@@ -24,14 +21,29 @@ const ViewCustomers = () => {
     fetchCustomers();
   }, []);
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredCustomers = customers.filter((customer) =>
+    customer.customer_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="customer-list">
+    <div className="customers-container">
       <h2>Customer List</h2>
+      <input
+        type="text"
+        placeholder="Search by customer name"
+        value={searchTerm}
+        onChange={handleSearch}
+        className="search-bar"
+      />
       <table>
         <thead>
           <tr>
             <th>Customer ID</th>
-            <th>Name</th>
+            <th>Customer Name</th>
             <th>Address</th>
             <th>Bank Name</th>
             <th>Account Number</th>
@@ -42,7 +54,7 @@ const ViewCustomers = () => {
           </tr>
         </thead>
         <tbody>
-          {customers.map((customer) => (
+          {filteredCustomers.map((customer) => (
             <tr key={customer.customer_id}>
               <td>{customer.customer_id}</td>
               <td>{customer.customer_name}</td>

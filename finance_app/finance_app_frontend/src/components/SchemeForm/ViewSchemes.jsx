@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./ViewScheme.css"; // CSS file for styling
+import { useNavigate } from "react-router-dom";
+import "./ViewScheme.css";
 
 const ViewSchemes = () => {
   const [schemes, setSchemes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch schemes from the server
     const fetchSchemes = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/schemes");
@@ -18,6 +19,10 @@ const ViewSchemes = () => {
 
     fetchSchemes();
   }, []);
+
+  const handleAddMember = (schemeId) => {
+    navigate(`/scheme/${schemeId}/add-member`); // Make sure this route matches what you set up in your router
+  };
 
   return (
     <div className="table-container">
@@ -32,11 +37,12 @@ const ViewSchemes = () => {
             <th>Payment Frequency</th>
             <th>Refundable</th>
             <th>Refund Amount</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {schemes.map((scheme) => (
-            <tr key={scheme.id}>
+            <tr key={scheme.scheme_id}>
               <td>{scheme.schemename}</td>
               <td>{scheme.totalamount}</td>
               <td>{new Date(scheme.startdate).toLocaleDateString()}</td>
@@ -44,6 +50,14 @@ const ViewSchemes = () => {
               <td>{scheme.paymentfrequency === "monthly" ? "Monthly" : "Yearly"}</td>
               <td>{scheme.isrefundable ? "Yes" : "No"}</td>
               <td>{scheme.refundamount}</td>
+              <td>
+                <button
+                  onClick={() => handleAddMember(scheme.scheme_id)}
+                  className="add-member-btn"
+                >
+                  Add Member
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
