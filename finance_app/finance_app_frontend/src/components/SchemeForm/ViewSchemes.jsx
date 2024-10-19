@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "./ViewScheme.css";
+import CustomerForm from "./CustomerForm"; // Import the form here
 
 const ViewSchemes = () => {
   const [schemes, setSchemes] = useState([]);
-  const navigate = useNavigate();
+  const [selectedSchemeId, setSelectedSchemeId] = useState(null); // State to track clicked "Add Member" button
+  const [showForm, setShowForm] = useState(false); // Toggle form visibility
 
   useEffect(() => {
+    // Fetch schemes from the server
     const fetchSchemes = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/schemes");
@@ -21,7 +24,8 @@ const ViewSchemes = () => {
   }, []);
 
   const handleAddMember = (schemeId) => {
-    navigate(`/scheme/${schemeId}/add-member`); // Make sure this route matches what you set up in your router
+    setSelectedSchemeId(schemeId); // Set the selected scheme ID
+    setShowForm(true); // Show the customer form when "Add Member" is clicked
   };
 
   return (
@@ -62,6 +66,14 @@ const ViewSchemes = () => {
           ))}
         </tbody>
       </table>
+
+      {showForm && (
+        <div className="form-container">
+          <h3>Add Customer to Scheme {selectedSchemeId}</h3>
+          {/* Render the CustomerForm and pass the schemeId */}
+          <CustomerForm schemeId={selectedSchemeId} />
+        </div>
+      )}
     </div>
   );
 };

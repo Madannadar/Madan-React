@@ -27,9 +27,7 @@ const Home = () => {
             <li>
               <Link to="/view-funds">View Funds</Link>
             </li>
-            <li>
-              <Link to="/customer-form">Add Customer</Link> {/* New Link for Customer Form */}
-            </li>
+            
             <li>
               <Link to="/view-customers">View Customers</Link> {/* Add this link */}
             </li>

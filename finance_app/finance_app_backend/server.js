@@ -138,6 +138,63 @@ app.post("/api/customers", (req, res) => {
     mobile_number
   ];
 
+app.post("/api/schemes", (req, res) => {
+  const { 
+    SchemeName, 
+    StartDate, 
+    EndDate, 
+    TotalAmount, 
+    PaymentFrequency, 
+    IsRefundable, 
+    RefundAmount 
+  } = req.body;
+
+  const tableName = SchemeName.replace(/\s+/g, '_').toLowerCase(); // Sanitize table name
+
+  const insertSchemeQuery = `
+    INSERT INTO schemes (
+      SchemeName, 
+      StartDate, 
+      EndDate, 
+      TotalAmount, 
+      PaymentFrequency,
+      IsRefundable, 
+      RefundAmount
+    ) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+  `;
+
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS ${tableName} (
+      customer_id SERIAL PRIMARY KEY,
+      customer_name VARCHAR(100) NOT NULL,
+      address TEXT NOT NULL,
+      bank_name VARCHAR(100) NOT NULL,
+      account_number VARCHAR(20) NOT NULL,
+      ifsc_code VARCHAR(11) NOT NULL,
+      branch VARCHAR(100) NOT NULL,
+      aadhar_number VARCHAR(12) NOT NULL,
+      mobile_number VARCHAR(10) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+
+  pool.query(insertSchemeQuery, [SchemeName, StartDate, EndDate, TotalAmount, PaymentFrequency, IsRefundable, RefundAmount])
+    .then((response) => {
+      console.log("Scheme added:", response.rows[0]);
+
+      // Create the table for the scheme
+      return pool.query(createTableQuery);
+    })
+    .then(() => {
+      res.json({ message: `Table created for scheme: ${SchemeName}` });
+    })
+    .catch((err) => {
+      console.error("Error:", err);
+      res.status(500).json({ error: "Error creating scheme and table", details: err.message });
+    });
+});
+
   pool.query(insertQuery, values)
     .then((response) => {
       console.log("Customer data saved:", response.rows[0]);
