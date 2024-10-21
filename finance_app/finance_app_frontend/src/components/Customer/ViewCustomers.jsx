@@ -1,12 +1,10 @@
-// src/components/ViewCustomers.jsx
-
 import React, { useEffect, useState } from "react";
 
 const ViewCustomers = () => {
   const [customers, setCustomers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); // Single search input
+  const [sortOrder, setSortOrder] = useState("asc"); // Sorting state (asc or desc)
 
-  
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -21,24 +19,48 @@ const ViewCustomers = () => {
     fetchCustomers();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+  // Handle sorting change between ascending and descending order
+  const handleSort = () => {
+    setSortOrder((prevSortOrder) => (prevSortOrder === "asc" ? "desc" : "asc"));
   };
 
-  const filteredCustomers = customers.filter((customer) =>
-    customer.customer_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter customers based on the single search term for all fields
+  const filteredCustomers = customers
+    .filter(
+      (customer) =>
+        customer.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        customer.bank_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        customer.branch.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        customer.aadhar_number.includes(searchTerm) || // No need to convert to lowercase for numbers
+        customer.mobile_number.includes(searchTerm) // No need to convert to lowercase for numbers
+    )
+    // Sort customers based on the customer_name and sortOrder
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.customer_name.toLowerCase() > b.customer_name.toLowerCase() ? 1 : -1;
+      } else {
+        return a.customer_name.toLowerCase() < b.customer_name.toLowerCase() ? 1 : -1;
+      }
+    });
 
   return (
     <div className="customers-container">
       <h2>Customer List</h2>
+
+      {/* Single search box */}
       <input
         type="text"
-        placeholder="Search by customer name"
+        placeholder="Search by any field (name, bank, branch, Aadhar, mobile)"
         value={searchTerm}
-        onChange={handleSearch}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className="search-bar"
       />
+
+      {/* Sort button */}
+      <button onClick={handleSort}>
+        Sort {sortOrder === "asc" ? "A to Z" : "Z to A"}
+      </button>
+
       <table>
         <thead>
           <tr>
