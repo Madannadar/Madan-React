@@ -91,7 +91,7 @@ const FundsForm = () => {
         required
       />
 
-      <label htmlFor="TotalAmount">Total Amount:</label>
+      <label htmlFor="TotalAmount">Minimum Amount:</label>
       <input
         type="number"
         id="TotalAmount"
