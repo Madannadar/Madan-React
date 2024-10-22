@@ -31,7 +31,7 @@ const ViewSchemes = () => {
   return (
     <div className="table-container">
       <h2>Available Schemes</h2>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Scheme Name</th>

@@ -89,3 +89,13 @@
     font-size: 14px;
   }
 }
+.error-message {
+  color: red;
+  font-size: 0.875em; /* Smaller font size for error messages */
+  margin-top: 5px; /* Space above the error message */
+}
+.success-message {
+  color: green;
+  font-size: 1em; /* Adjust font size */
+  margin-top: 10px; /* Space above the success message */
+}

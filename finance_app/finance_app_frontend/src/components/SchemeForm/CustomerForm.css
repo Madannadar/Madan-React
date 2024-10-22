@@ -52,3 +52,8 @@
   border-color: #4CAF50;
 }
 
+.error-message {
+  color: red; /* Change the color to red */
+  font-size: 0.9em; /* Slightly smaller font size */
+  margin-top: 0.2em; /* Small margin for spacing */
+}

@@ -11,6 +11,8 @@ const FundsForm = () => {
     IsRefundable: false,
     RefundAmount: 0,
   });
+  const [errors, setErrors] = useState({}); // State to hold error messages
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   // Handle input changes and update the state
   const handleChange = (e) => {
@@ -22,6 +24,7 @@ const FundsForm = () => {
         return; // Prevent further input
       }
     }
+    
     setFundData({
       ...fundData,
       [name]: type === "checkbox" ? checked : value,
@@ -31,6 +34,14 @@ const FundsForm = () => {
   // Handle form submission to send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
+    setSuccessMessage("");
+
+    if (fundData.PaymentFrequency.toLowerCase() !== "monthly" && fundData.PaymentFrequency.toLowerCase() !== "yearly") {
+      setErrors((prev) => ({ ...prev, PaymentFrequency: "Payment frequency must be either 'monthly' or 'yearly'." }));
+      return; // Prevent form submission if validation fails
+    }
+
     try {
       const response = await fetch("http://localhost:5000/api/funds", {
         method: "POST",
@@ -48,6 +59,8 @@ const FundsForm = () => {
 
       const result = await response.json();
       console.log("Fund added:", result);
+
+      setSuccessMessage("funds added successfully!");
 
       // Clear form after successful submission
       setFundData({
@@ -83,7 +96,7 @@ const FundsForm = () => {
         type="number"
         id="TotalAmount"
         name="TotalAmount"
-        placeholder="12 digits, 12 decimals"
+        placeholder="minimum 500rs"
         value={fundData.TotalAmount}
         onChange={handleChange}
         required
@@ -109,11 +122,13 @@ const FundsForm = () => {
         required
       />
 
+      {errors.PaymentFrequency && <p className="error-message">{errors.PaymentFrequency}</p>}
       <label htmlFor="PaymentFrequency">Payment Frequency:</label>
       <input
         type="text"
         id="PaymentFrequency"
         name="PaymentFrequency"
+        placeholder="monthly or yearly"
         value={fundData.PaymentFrequency}
         onChange={handleChange}
         required
@@ -140,6 +155,8 @@ const FundsForm = () => {
       />
 
       <button type="submit">Submit</button>
+      {successMessage && <p className="success-message">{successMessage}</p>}
+
     </form>
   );
 };

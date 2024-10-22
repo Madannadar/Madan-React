@@ -9,12 +9,12 @@ const Home = () => {
   return (
     <div className="home">
       <header className="home-header">
-        <h1>Finance Management System</h1>
+        <h1>MAHALAXMI FINANCIAL FUND</h1>
         <nav>
           <ul>
-            <li>
+            {/* <li>
               <Link to="/">Home</Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/scheme">Add Scheme</Link>
             </li>

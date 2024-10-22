@@ -12,10 +12,13 @@ const SchemeForm = () => {
     RefundAmount: 0,
   });
 
+  const [errors, setErrors] = useState({}); // State to hold error messages
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
+
   // Handle input changes and update the state
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     if (name === "TotalAmount") {
       if (value.length > 12) {
         alert("Total amount cannot exceed 12 digits.");
@@ -31,6 +34,17 @@ const SchemeForm = () => {
   // Handle form submission to send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Reset errors and success message before validation
+    setErrors({});
+    setSuccessMessage("");
+
+    // Validate Payment Frequency
+    if (schemeData.PaymentFrequency.toLowerCase() !== "monthly" && schemeData.PaymentFrequency.toLowerCase() !== "yearly") {
+      setErrors((prev) => ({ ...prev, PaymentFrequency: "Payment frequency must be either 'monthly' or 'yearly'." }));
+      return; // Prevent form submission if validation fails
+    }
+
     try {
       const response = await fetch("http://localhost:5000/api/schemes", {
         method: "POST",
@@ -41,13 +55,16 @@ const SchemeForm = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();  // Get detailed error from backend
-        console.error("Error details:", errorData.details);  // Log backend error details
+        const errorData = await response.json(); // Get detailed error from backend
+        console.error("Error details:", errorData.details); // Log backend error details
         throw new Error("Error adding scheme");
       }
 
       const result = await response.json();
       console.log("Scheme added:", result);
+
+      // Set success message after successful submission
+      setSuccessMessage("Scheme added successfully!");
 
       // Clear form after successful submission
       setSchemeData({
@@ -78,12 +95,12 @@ const SchemeForm = () => {
         required
       />
 
-      <label htmlFor="TotalAmount">Minimun Amount:</label>
+      <label htmlFor="TotalAmount">Minimum Amount:</label>
       <input
         type="number"
         id="TotalAmount"
         name="TotalAmount"
-        placeholder="more then 500rs"
+        placeholder="more than 500rs"
         value={schemeData.TotalAmount}
         onChange={handleChange}
         required
@@ -116,8 +133,11 @@ const SchemeForm = () => {
         name="PaymentFrequency"
         value={schemeData.PaymentFrequency}
         onChange={handleChange}
+        placeholder="monthly or yearly"
         required
       />
+      {/* Error message for Payment Frequency */}
+      {errors.PaymentFrequency && <p className="error-message">{errors.PaymentFrequency}</p>}
 
       <label htmlFor="RefundAmount">Refund Amount:</label>
       <input
@@ -140,6 +160,8 @@ const SchemeForm = () => {
       />
 
       <button type="submit">Submit</button>
+      {/* Success message */}
+      {successMessage && <p className="success-message">{successMessage}</p>}
     </form>
   );
 };

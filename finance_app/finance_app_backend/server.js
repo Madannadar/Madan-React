@@ -129,7 +129,6 @@ app.get('/api/funds', (req, res) => {
     });
 });
 
-
 // POST route for adding customer details
 app.post("/api/customers", (req, res) => {
   const { 
@@ -140,7 +139,9 @@ app.post("/api/customers", (req, res) => {
     ifsc_code, 
     branch, 
     aadhar_number, 
-    mobile_number 
+    mobile_number, 
+    start_date,     // New field
+    total_amount    // New field
   } = req.body;
 
   const insertQuery = `
@@ -152,9 +153,11 @@ app.post("/api/customers", (req, res) => {
       ifsc_code, 
       branch, 
       aadhar_number, 
-      mobile_number
+      mobile_number,
+      start_date,     -- New field in the query
+      total_amount    -- New field in the query
     ) 
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;
   `;
 
   const values = [
@@ -165,7 +168,9 @@ app.post("/api/customers", (req, res) => {
     ifsc_code, 
     branch, 
     aadhar_number, 
-    mobile_number
+    mobile_number,
+    start_date,     // New field value
+    total_amount    // New field value
   ];
 
   pool.query(insertQuery, values)
@@ -179,18 +184,19 @@ app.post("/api/customers", (req, res) => {
     });
 });
 
-  app.get('/api/customers', (req, res) => {
-    const selectQuery = 'SELECT * FROM customers';
-  
-    pool.query(selectQuery)
-      .then((result) => {
-        res.json(result.rows);
-      })
-      .catch((error) => {
-        console.error('Error fetching customers:', error);
-        res.status(500).send('Error fetching customers');
-      });
-  });
+app.get('/api/customers', (req, res) => {
+  const selectQuery = 'SELECT * FROM customers';
+
+  pool.query(selectQuery)
+    .then((result) => {
+      res.json(result.rows); // Ensure this is returning JSON
+    })
+    .catch((error) => {
+      console.error('Error fetching customers:', error);
+      res.status(500).send('Error fetching customers'); // You can return a JSON response here too
+    });
+});
+
 
 // Start the server
   app.listen(5000, () => console.log("Server running on port 5000"));
