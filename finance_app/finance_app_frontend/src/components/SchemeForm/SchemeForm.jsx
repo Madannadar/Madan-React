@@ -78,12 +78,12 @@ const SchemeForm = () => {
         required
       />
 
-      <label htmlFor="TotalAmount">Total Amount:</label>
+      <label htmlFor="TotalAmount">Minimun Amount:</label>
       <input
         type="number"
         id="TotalAmount"
         name="TotalAmount"
-        placeholder="12 digits, 2 decimals"
+        placeholder="more then 500rs"
         value={schemeData.TotalAmount}
         onChange={handleChange}
         required
