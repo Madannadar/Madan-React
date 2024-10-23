@@ -68,6 +68,9 @@ app.get('/api/schemes', (req, res) => {
     });
 });
 
+
+
+
 // POST route for adding funds
 app.post("/api/funds", (req, res) => {
   const { 
@@ -128,6 +131,9 @@ app.get('/api/funds', (req, res) => {
       res.status(500).send('Error fetching funds');
     });
 });
+
+
+
 
 // POST route for adding customer details
 app.post("/api/customers", (req, res) => {

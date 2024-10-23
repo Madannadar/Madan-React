@@ -95,8 +95,8 @@ const ViewCustomers = () => {
             <th>Branch</th>
             <th>Aadhar Number</th>
             <th>Mobile Number</th>
-            <th>Start Date</th> {/* New field */}
-            <th>Total Amount</th> {/* New field */}
+            <th>Start Date</th> 
+            <th>Total Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -111,8 +111,8 @@ const ViewCustomers = () => {
               <td>{customer.branch}</td>
               <td>{customer.aadhar_number}</td>
               <td>{customer.mobile_number}</td>
-              <td>{customer.start_date}</td> {/* Display Start Date */}
-              <td>{customer.total_amount}</td> {/* Display Total Amount */}
+              <td>{customer.start_date}</td> 
+              <td>{customer.total_amount}</td> 
             </tr>
           ))}
         </tbody>
