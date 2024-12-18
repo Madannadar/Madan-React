@@ -23,6 +23,8 @@ const PlayVideo = () => {
                 <span><img src={share}alt="" />Share</span>
                 <span><img src={save}alt="" />Save</span>
             </div>
+            </div>
+            <hr />
             <div className="publisher">
                 <img src={jack} alt="" />
                 <div>
@@ -97,7 +99,6 @@ const PlayVideo = () => {
                     </div>
                 </div>
             </div>
-        </div>
     </div>
   )
 }
